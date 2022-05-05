@@ -7,10 +7,6 @@ http GET localhost:3000/public/html/500.html
 http GET localhost:3000/public/style.css
 http GET localhost:3000/public/alert.js
 ```
-app.js # notre base de code.
-# Logs
-logs
-*.log
 
 Commandes à tester avec chacun des fichiers pour constater
 - soit l'absence de PARSE lorsqu'on ne met pas le middlewar
