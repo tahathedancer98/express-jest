@@ -17,4 +17,9 @@ http POST localhost:3000 hello=World valeur=2
 http --form localhost:3000 hello=World valeur=2
 
 ```
+
+Pour le dossier 05-PARSE-URL-ARGUMENTS
+```
+http get :3000/hey/blala/hey2
+```
 Notez que le nombre n'a pas été converti en nombres (il est sous forme deString.
