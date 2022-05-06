@@ -1,19 +1,22 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
-function myErrorMiddleware(err,req, res, next){
-    res.status(500).json("Internal Server Error")
-    next()
+function myErrorMiddleware(err, req, res, next) {
+	res.status(500).json({erreur: err.message});
 }
 
-app.use(myErrorMiddleware)
 
 app.get('/', (req, res, next) => {
-    try {
-        throw new Error('Ceci est un bug')
-    } catch (error) {
-        next(error)
-    }
+		throw new Error('ceci est un bug dans la route /');
+		res.send('Je ne serai pas executé du à un bug');
 })
 
-app.listen(3000)
+app.get('/route2', (req, res, next) => {
+		throw new Error('ceci est un bug dans la route 2');
+		res.send('Je ne serai pas executé du à un bug');
+})
+
+app.use(myErrorMiddleware);
+
+
+app.listen(3000);
