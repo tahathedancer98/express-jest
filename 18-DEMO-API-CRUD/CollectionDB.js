@@ -26,7 +26,7 @@ class CollectionDB{
     all(){ return Object.fromEntries(this.maBD) }
     searchByProperty(propertyName, value){
         let result = false;
-        this.maBD.forEach((obj, index) => {
+        this.maBD.forEach((obj, id) => {
             if(!result){
                 if(propertyName in obj && obj[propertyName] === value) result = {id : id, found : obj}
             }
@@ -36,6 +36,8 @@ class CollectionDB{
     getUserCourses(user){
         var courses = [];
         this.maBD.forEach((obj, index) => {
+            console.log(obj)
+            console.log(user)
             if(obj['idUser'] == user.id){
                 courses.push(obj)
             }
