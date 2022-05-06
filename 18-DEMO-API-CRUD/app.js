@@ -55,9 +55,31 @@ app.get('/', (req , res) => {
     res.status(200).json({message: Accounts.all()});
 })
 
-
-
+// INSCRIPTION
+app.post("/signup", async (req, res) => {
+    const payload = req.body;
+    const schema = Joi.object({
+      name: Joi.string().min(3).max(50).required(),
+      email: Joi.string().max(255).required().email(),
+      password: Joi.string().min(3).max(50).required(),
+    });
   
+    const { value: account, error } = schema.validate(payload);
+    if (error) return res.status(400).send({ erreur: error.details[0].message });
+    // AVANT D'INSCRIRE ON VERIFIE QUE LE COMPTE EST UNIQUE.
+    const { id, found } = Accounts.searchByProperty("email", account.email);
+    if (found) return res.status(400).send("Please signin instead of signup");
+    // WE NEED TO HASH THE PASSWORDW
+    const salt = await bcrypt.genSalt(10);
+    const passwordHashed = await bcrypt.hash(account.password, salt);
+    account.password = passwordHashed;
+  
+    Accounts.insert(account);
+    res.status(201).json({
+      name: account.name,
+      email: account.email,
+    });
+  });
 
 // Connexion
 app.post('/login', async (req , res) => {
@@ -81,9 +103,8 @@ app.post('/login', async (req , res) => {
     if (!account) return res.status(400).send({ erreur: "Email Invalide" });
 
      // ON DOIT COMPARER LES HASH
-    // const passwordIsValid = await bcrypt.compare(req.body.password, account.password);
-    var passwordIsValid=false
-    if(account.password == connexion.password) passwordIsValid =true;
+    const passwordIsValid = await bcrypt.compare(req.body.password, account.password);
+    
     if (!passwordIsValid)
         return res.status(400).send({ erreur: "Mot de Passe Invalide" });
 
