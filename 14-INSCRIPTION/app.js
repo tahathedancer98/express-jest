@@ -2,6 +2,7 @@ const express = require("express");
 const Joi = require("joi");
 const Collection = require("../Collection");
 const app = express();
+require('dotenv').config()
 
 const Accounts = new Collection("Accounts");
 
