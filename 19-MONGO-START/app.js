@@ -21,9 +21,7 @@ async function createdUser(doc){
     } catch (error) {
         // ici on peut gérer les exc les cas où la promesse échoue
     }
-    
 }
-
 const p1 = createdUser({
     name: "Taha",
     username : "ToTo",
@@ -39,17 +37,22 @@ const p2 = createdUser({
 Promise.all([p1.p2]).then(async () => {
     const all_docs = await User.find();
     console.log(all_docs);
-    
+    // GET
     const filtered_docs = await User.find({name:"Yassin"})
     console.log(filtered_docs);
-
+    // UPDATE
     const oneUser = await User.findOne();
     console.log(oneUser);
     console.log(oneUser._id);
     oneUser.name = "MODIFIED";
     const result = await oneUser.save()
     console.log(result);
-    
+    // DELETE
+    const oneUser2 = await User.findOne();
+    console.log(oneUser2);
+    const result2 = await oneUser2.deleteOne({_id: oneUser2._id})
+    console.log(result2);
+
     mongoose.connection.close()
 })
 
