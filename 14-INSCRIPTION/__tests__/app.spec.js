@@ -5,13 +5,13 @@ describe("POST /signup", () => {
   it.each([{ name: "PasdeMotpasse" }, { password: "PasdeName" }])(
     "should refuse %p without inserting it.",
     async (invalidObject) => {
-      const idDébutTest = Accounts.id;
+      const idDebutTest = Accounts.id;
       const result = await request(app)
         .post("/signup")
         .send(invalidObject)
-        .expect(400);
+        .expect(400);  // Premier TEST
       const idFinTest = Accounts.id;
-      expect(idFinTest).toBe(idDébutTest);
+      expect(idFinTest).toBe(idDebutTest); // Deuxieme TEST
     }
   );
 
@@ -19,7 +19,7 @@ describe("POST /signup", () => {
     const result = await request(app)
       .post("/signup")
       .send({ name: "Deadpool", password: "secret1234" })
-      .expect(201);
-    expect(result.body).toEqual({ name: "Deadpool" });
+      .expect(201); 
+    expect(result.body).toEqual({ name: "Deadpool" }); // Troisieme TEST
   });
 });
