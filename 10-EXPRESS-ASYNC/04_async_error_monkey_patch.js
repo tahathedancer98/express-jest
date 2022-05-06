@@ -1,12 +1,12 @@
-
 const express = require('express');
 require('express-async-errors');
-// INSERER EXPRESS ASYNC ERROR AVANT D'APPELLER `express()`
 const app = express();
 
-app.get('/', (req, res) => {
-	throw new Error('Je suis un bug');
-	res.send("Je n'enverrai jamais ceci");
+
+// essayez d'enlever le async pour constater qu'il n y a plus de différences.
+app.get('/', async (req, res) => {
+	throw new Error("Je suis un ASYNC bug")
+	res.send('JE NE SERAI JAMAIS EXECUTE');
 })
 
 app.use((err, req, res, next) => {
