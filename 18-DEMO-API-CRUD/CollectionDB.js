@@ -33,5 +33,14 @@ class CollectionDB{
         })
         return result || {};
     }
+    getUserCourses(user){
+        var courses = [];
+        this.maBD.forEach((obj, index) => {
+            if(obj['idUser'] == user.id){
+                courses.push(obj)
+            }
+        })
+        return courses;
+    }
 }
 module.exports = CollectionDB
