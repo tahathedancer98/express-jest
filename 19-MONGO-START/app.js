@@ -42,6 +42,14 @@ Promise.all([p1.p2]).then(async () => {
     
     const filtered_docs = await User.find({name:"Yassin"})
     console.log(filtered_docs);
+
+    const oneUser = await User.findOne();
+    console.log(oneUser);
+    console.log(oneUser._id);
+    oneUser.name = "MODIFIED";
+    const result = await oneUser.save()
+    console.log(result);
+    
     mongoose.connection.close()
 })
 
